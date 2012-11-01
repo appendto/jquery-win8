@@ -9480,9 +9480,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	});
 });
 (function (jQuery) {
-
     'use strict';
-
     jQuery.extend({
         parseXML: function(data) {
             var xml, tmp;
@@ -9490,13 +9488,13 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
                 return null;
             }
             try {
-                if (typeof(Windows) === "object"){ // WinRT
+                if (typeof(Windows) === "object"){
                     xml = new Windows.Data.Xml.Dom.XmlDocument();
                     xml.loadXml(data);
-                } else if (window.DOMParser) { // Standard
+                } else if (window.DOMParser) {
                     tmp = new DOMParser();
                     xml = tmp.parseFromString(data, "text/xml");
-                } else { // IE
+                } else {
                     xml = new ActiveXObject("Microsoft.XMLDOM");
                     xml.async = "false";
                     xml.loadXML(data);
@@ -9510,7 +9508,6 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
             return xml;
         }
     });
-    
 })(jQuery);// Expose jQuery to the global object
 window.jQuery = window.$ = jQuery;
 
