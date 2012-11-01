@@ -1,5 +1,13 @@
 /*!
- * jQuery JavaScript Library v@VERSION
+ * jquery-win8 - A version of jQuery for Windows 8 Applications
+ * version:	0.1
+ * author: appendTo, LLC
+ * copyright: 2012
+ * license:	MIT (http://www.opensource.org/licenses/mit-license)
+ * date: Thu, 01 Nov 2012 08:56:35 GMT
+ */
+/*!
+ * jQuery JavaScript Library v1.8.2
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -9,7 +17,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: @DATE
+ * Date: Thu Sep 20 2012 21:13:05 GMT-0400 (Eastern Daylight Time)
  */
 (function( window, undefined ) {
 var
@@ -6272,6 +6280,15 @@ function fixDefaultChecked( elem ) {
 	}
 }
 
+/**
+{
+    "author": "Jonathan Sampson",
+    "moment": "2012-10-31",
+    "status": "update",
+    "target": "clone",
+    "reason": "Adding flag for jQuery.isUnsafe (and MSApp)"
+}
+**/
 jQuery.extend({
 	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
 		var srcElements,
@@ -6284,7 +6301,13 @@ jQuery.extend({
 
 		// IE<=8 does not properly clone detached, unknown element nodes
 		} else {
-			fragmentDiv.innerHTML = elem.outerHTML;
+		    if (jQuery.isUnsafe && typeof MSApp === "object") {
+		        MSApp.execUnsafeLocalFunction(function () {
+		            fragmentDiv.innerHTML = elem.outerHTML;
+		        });
+		    } else {
+		        fragmentDiv.innerHTML = elem.outerHTML;
+		    }
 			fragmentDiv.removeChild( clone = fragmentDiv.firstChild );
 		}
 
@@ -6333,6 +6356,15 @@ jQuery.extend({
 		return clone;
 	},
 
+    /**
+    {
+        "author": "Jonathan Sampson",
+        "moment": "2012-10-31",
+        "status": "update",
+        "target": "clean",
+        "reason": "Adding flag for jQuery.isUnsafe (and MSApp)"
+    }
+    **/
 	clean: function( elems, context, fragment, scripts ) {
 		var i, j, elem, tag, wrap, depth, div, hasBody, tbody, len, handleScript, jsTags,
 			safe = context === document && safeFragment,
@@ -6370,7 +6402,13 @@ jQuery.extend({
 					tag = ( rtagName.exec( elem ) || ["", ""] )[1].toLowerCase();
 					wrap = wrapMap[ tag ] || wrapMap._default;
 					depth = wrap[0];
-					div.innerHTML = wrap[1] + elem + wrap[2];
+					if ( jQuery.isUnsafe && typeof MSApp === "object" ) {
+					    MSApp.execUnsafeLocalFunction(function () {
+					        div.innerHTML = wrap[1] + elem + wrap[2];
+					    });
+					} else {
+					    div.innerHTML = wrap[1] + elem + wrap[2];
+					}
 
 					// Move to the right depth
 					while ( depth-- ) {
@@ -9480,8 +9518,11 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	});
 });
 (function (jQuery) {
+
     'use strict';
+
     jQuery.extend({
+        isUnsafe: true,
         parseXML: function(data) {
             var xml, tmp;
             if (!data || typeof data !== "string") {
@@ -9508,6 +9549,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
             return xml;
         }
     });
+
 })(jQuery);// Expose jQuery to the global object
 window.jQuery = window.$ = jQuery;
 
