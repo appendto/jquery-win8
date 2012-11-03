@@ -4,7 +4,7 @@
  * author: appendTo, LLC
  * copyright: 2012
  * license:	MIT (http://www.opensource.org/licenses/mit-license)
- * date: Thu, 01 Nov 2012 08:56:35 GMT
+ * date: Sat, 03 Nov 2012 00:17:51 GMT
  */
 /*!
  * jQuery JavaScript Library v1.8.2
@@ -9522,7 +9522,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
     'use strict';
 
     jQuery.extend({
-        isUnsafe: true,
+        isUnsafe: false,
         parseXML: function(data) {
             var xml, tmp;
             if (!data || typeof data !== "string") {
